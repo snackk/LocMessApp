@@ -4,11 +4,11 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_messages"
-            android:icon="@drawable/ic_menu_share"
+            android:icon="@android:drawable/sym_action_chat"
             android:title="Messages" />
         <item
             android:id="@+id/nav_locations"
-            android:icon="@drawable/ic_menu_send"
+            android:icon="@android:drawable/ic_dialog_map"
             android:title="Locations" />
         <item
             android:id="@+id/nav_account"
