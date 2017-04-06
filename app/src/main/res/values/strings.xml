@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">LocMess</string>
+    <string name="emailField">example@domain.com</string>
+    <string name="passwordField">password</string>
+    <string name="logInField">Log In</string>
+    <string name="registerField">Don\'t have and account yet? Sign here!</string>
+    <string name="title_activity_register">Register</string>
+    <string name="registerButton">Register</string>
+
+    <string name="firstNameText">First Name</string>
+    <string name="lastNameText">Last Name</string>
+
+    <string name="title_activity_loc_mess_drawer">LocMess</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "511012152609",
+    "firebase_url": "https://locmess-8dca4.firebaseio.com",
+    "project_id": "locmess-8dca4",
+    "storage_bucket": "locmess-8dca4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:511012152609:android:e3242c4c5c5615a9",
+        "android_client_info": {
+          "package_name": "pt.cmov.locmess.locmess"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "511012152609-ln5mb07s4rlhnfoeg72s96m2hi0ea86h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9dCdpRLFebPUj0c1L26clHDvrLmA68Kk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
