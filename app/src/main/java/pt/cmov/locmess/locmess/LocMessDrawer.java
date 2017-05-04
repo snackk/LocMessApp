@@ -23,7 +23,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import pt.cmov.locmess.locmess.fragment.MessagesFragment;
+
+import pt.cmov.locmess.locmess.locations.LocationsFragment;
+import pt.cmov.locmess.locmess.messages.MessagesFragment;
 
 public class LocMessDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -87,7 +89,7 @@ public class LocMessDrawer extends AppCompatActivity
         if (id == R.id.nav_messages) {
             loadFragment(fragType.Messages);
         } else if (id == R.id.nav_locations) {
-            //loadFragment(fragType.Locations);
+            loadFragment(fragType.Locations);
         } else if (id == R.id.nav_account) {
             //loadFragment(fragType.Account);
         }
@@ -114,6 +116,7 @@ public class LocMessDrawer extends AppCompatActivity
             case Account:
                 break;
             case Locations:
+                fragment = new LocationsFragment();
                 break;
             case Messages:
                 fragment = new MessagesFragment();
