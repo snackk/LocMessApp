@@ -18,12 +18,15 @@
     <string name="action_settings">Settings</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="received">Hello RECEIVED</string>
+    <string name="received_messages">Received petera</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="all_locations">All locations</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="my_locations">My locations</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="my_profile">Profilians</string>
 
 </resources>

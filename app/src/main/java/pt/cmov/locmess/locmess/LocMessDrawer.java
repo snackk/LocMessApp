@@ -24,8 +24,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import pt.cmov.locmess.locmess.locations.LocationsFragment;
-import pt.cmov.locmess.locmess.messages.MessagesFragment;
+import pt.cmov.locmess.locmess.fragments.locations.LocationsFragment;
+import pt.cmov.locmess.locmess.fragments.messages.MessagesFragment;
+import pt.cmov.locmess.locmess.fragments.profile.ProfileFragment;
 
 public class LocMessDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -91,7 +92,7 @@ public class LocMessDrawer extends AppCompatActivity
         } else if (id == R.id.nav_locations) {
             loadFragment(fragType.Locations);
         } else if (id == R.id.nav_account) {
-            //loadFragment(fragType.Account);
+            loadFragment(fragType.Account);
         }
         else if (id == R.id.nav_logout) {
             progressDialog.setMessage("Signing out...");
@@ -114,6 +115,7 @@ public class LocMessDrawer extends AppCompatActivity
 
         switch(c){
             case Account:
+                fragment = new ProfileFragment();
                 break;
             case Locations:
                 fragment = new LocationsFragment();
