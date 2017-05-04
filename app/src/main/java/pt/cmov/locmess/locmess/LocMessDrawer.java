@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -16,7 +15,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -25,25 +23,22 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
 import pt.cmov.locmess.locmess.fragment.MessagesFragment;
 
 public class LocMessDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private FirebaseAuth.AuthStateListener mAuthListener;
+    //Firebase
     private FirebaseAuth mAuth;
+    private DatabaseReference dRef;
 
+    //Header drawer
     private TextView nameText;
     private TextView emailText;
 
     private NavigationView navigationView;
-    private Toolbar toolbar;
 
     private ProgressDialog progressDialog;
-
-    private DatabaseReference dRef;
-    private FragmentManager fragmentManager;
 
     private enum fragType{
         Messages, Locations, Account
@@ -59,20 +54,11 @@ public class LocMessDrawer extends AppCompatActivity
         //Set initial fragment
         loadFragment(fragType.Messages);
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        //init drawer
+        initDrawer();
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
-        navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
+        //init firebase user
         handleFireBaseUser();
-
     }
 
     @Override
@@ -117,11 +103,13 @@ public class LocMessDrawer extends AppCompatActivity
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
+
         return true;
     }
 
-    public void loadFragment(fragType c){
+    private void loadFragment(fragType c){
         Fragment fragment = null;
+
         switch(c){
             case Account:
                 break;
@@ -132,8 +120,21 @@ public class LocMessDrawer extends AppCompatActivity
                 break;
         }
         FragmentTransaction mainFragmentTransaction = getSupportFragmentManager().beginTransaction();
-        mainFragmentTransaction.replace(R.id.fragment_container, fragment);
-        mainFragmentTransaction.commit();
+        mainFragmentTransaction.replace(R.id.app_content, fragment).commit();
+    }
+
+    private void initDrawer(){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
     }
 
     private void handleFireBaseUser(){
@@ -192,7 +193,6 @@ public class LocMessDrawer extends AppCompatActivity
                 public void onCancelled(DatabaseError databaseError) {
 
                 }
-                // ....
             });
         }
     }

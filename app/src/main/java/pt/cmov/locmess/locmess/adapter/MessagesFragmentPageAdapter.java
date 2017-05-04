@@ -8,9 +8,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import pt.cmov.locmess.locmess.fragment.MessagesReceivedFragment;
-import pt.cmov.locmess.locmess.fragment.MessagesSentFragment;
-
 /**
  * Created by snackk on 04/05/2017.
  */
