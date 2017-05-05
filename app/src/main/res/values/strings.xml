@@ -5,6 +5,7 @@
     <string name="logInField">Log In</string>
     <string name="registerField">Don\'t have and account yet? Sign here!</string>
     <string name="title_activity_register">Register</string>
+    <string name="title_activity_login">Log in</string>
     <string name="registerButton">Register</string>
 
     <string name="firstNameText">First Name</string>
