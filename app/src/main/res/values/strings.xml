@@ -32,4 +32,7 @@
 
     <string name="title_create_message">New Message</string>
 
+    <string name="title_create_location">New Location</string>
+    <string name="title_activity_maps_create">Map</string>
+
 </resources>

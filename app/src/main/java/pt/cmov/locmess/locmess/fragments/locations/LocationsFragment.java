@@ -1,12 +1,17 @@
 package pt.cmov.locmess.locmess.fragments.locations;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import pt.cmov.locmess.locmess.LocationCreateActivity;
+import pt.cmov.locmess.locmess.MapsCreateActivity;
 import pt.cmov.locmess.locmess.R;
 import pt.cmov.locmess.locmess.adapter.FragmentPageAdapter;
 
@@ -38,15 +43,18 @@ public class LocationsFragment extends Fragment {
                 tabLayout.setupWithViewPager(viewPager);
             }
         });
-/*
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.new_location_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Message sent!", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                /*Snackbar.make(view, "Message sent!", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*/
+                Intent myIntent = new Intent(getContext(), MapsCreateActivity.class);
+                startActivity(myIntent);
             }
-        });*/
+        });
+
 
         return view;
     }
