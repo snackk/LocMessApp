@@ -30,4 +30,6 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="my_profile">Profilians</string>
 
+    <string name="title_create_message">New Message</string>
+
 </resources>
