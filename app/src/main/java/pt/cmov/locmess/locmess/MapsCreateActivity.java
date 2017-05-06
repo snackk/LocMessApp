@@ -44,5 +44,5 @@ public class MapsCreateActivity extends FragmentActivity implements OnMapReadyCa
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
 
-    
+
 }

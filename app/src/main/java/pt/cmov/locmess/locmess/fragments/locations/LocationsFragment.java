@@ -9,8 +9,6 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import pt.cmov.locmess.locmess.LocationCreateActivity;
 import pt.cmov.locmess.locmess.MapsCreateActivity;
 import pt.cmov.locmess.locmess.R;
 import pt.cmov.locmess.locmess.adapter.FragmentPageAdapter;

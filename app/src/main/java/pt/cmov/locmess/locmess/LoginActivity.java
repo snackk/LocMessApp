@@ -35,6 +35,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        setTitle("Log In");
+
         progressDialog = new ProgressDialog(this);
 
         logInButton = (Button) findViewById(R.id.logInButton);
