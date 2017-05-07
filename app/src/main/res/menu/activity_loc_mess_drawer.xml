@@ -4,16 +4,16 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_messages"
-            android:icon="@android:drawable/sym_action_chat"
+            android:icon="@drawable/ic_chat_black_24dp"
             android:title="Messages"
             android:checked="true"/>
         <item
             android:id="@+id/nav_locations"
-            android:icon="@android:drawable/ic_dialog_map"
+            android:icon="@drawable/ic_map_black_24dp"
             android:title="Locations" />
         <item
             android:id="@+id/nav_account"
-            android:icon="@drawable/profile"
+            android:icon="@drawable/ic_account_circle_black_24dp"
             android:title="Profile" />
     </group>
 
@@ -21,7 +21,7 @@
         <menu>
             <item
             android:id="@+id/nav_logout"
-            android:icon="@drawable/common_full_open_on_phone"
+            android:icon="@drawable/ic_power_settings_new_black_24dp"
             android:title="Logout" />
 
         </menu>
