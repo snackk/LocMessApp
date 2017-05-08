@@ -2,28 +2,19 @@ package pt.cmov.locmess.locmess.fragments.messages;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
-
 import pt.cmov.locmess.locmess.R;
+import pt.cmov.locmess.locmess.adapter.MessageData;
+import pt.cmov.locmess.locmess.adapter.MessagesRVAdapter;
 
 public class MessagesSentFragment extends Fragment {
 
-    public static final String[] FruiteList = {"Apple", "Orange", "Mango", "Grapes", "Jackfruit","pomegranate","Apple", "Orange", "Mango", "Grapes", "Jackfruit","pomegranate",
-            "Apple", "Orange", "Mango", "Grapes", "Jackfruit","pomegranate","Apple", "Orange", "Mango", "Grapes", "Jackfruit","pomegranate",
-            "Apple", "Orange", "Mango", "Grapes", "Jackfruit","pomegranate",
-            "Apple", "Orange", "Mango", "Grapes", "Jackfruit","pomegranate",
-            "Apple", "Orange", "Mango", "Grapes", "Jackfruit","pomegranate","Apple", "Orange", "Mango", "Grapes", "Jackfruit","pomegranate","Apple", "Orange", "Mango", "Grapes", "Jackfruit","pomegranate",
-            "Apple", "Orange", "Mango", "Grapes", "Jackfruit","pomegranate","Apple", "Orange", "Mango", "Grapes", "Jackfruit","pomegranate",
-            "Apple", "Orange", "Mango", "Grapes", "Jackfruit","pomegranate",
-            "Apple", "Orange", "Mango", "Grapes", "Jackfruit","pomegranate",
-            "Apple", "Orange", "Mango", "Grapes", "Jackfruit","pomegranate" };
-
-    List fruiteslist = Arrays.asList(FruiteList);
     public MessagesSentFragment() {
         // Required empty public constructor
     }
@@ -36,12 +27,22 @@ public class MessagesSentFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_messages_sent, container, false);
-      /*  RecyclerView rv = (RecyclerView) view.findViewById(R.id.rv);
-        rv.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        rv.setAdapter(new recycleview_adapter(fruiteslist));*/
+        List<MessageData> todelete = new ArrayList<MessageData>();
+        todelete.add(new MessageData("Diogo", "Vendo bike a 10 paus", "timestamp", "Arco do cego"));
+        todelete.add(new MessageData("Diogo", "Vendo bike a 10 paus", "timestamp", "Arco do cego"));
+        todelete.add(new MessageData("Diogo", "Vendo bike a 10 paus", "timestamp", "Arco do cego"));
+        todelete.add(new MessageData("Diogo", "Vendo bike a 10 paus", "timestamp", "Arco do cego"));
+        todelete.add(new MessageData("Diogo", "Vendo bike a 10 paus", "timestamp", "Arco do cego"));
+        todelete.add(new MessageData("Diogo", "Vendo bike a 10 paus", "timestamp", "Arco do cego"));
+        todelete.add(new MessageData("Diogo", "Vendo bike a 10 paus", "timestamp", "Arco do cego"));
+
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.messages_recycler_view);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(new MessagesRVAdapter(todelete));
+
         return view;
     }
 }

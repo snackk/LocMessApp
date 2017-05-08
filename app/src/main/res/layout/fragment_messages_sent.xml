@@ -4,10 +4,10 @@
     android:layout_height="match_parent"
     tools:context="pt.cmov.locmess.locmess.fragments.messages.MessagesSentFragment">
 
-    <TextView
-        android:id="@+id/id_text_view"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/messages_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?attr/textAppearanceListItem"/>
+        android:layout_height="match_parent"
+        android:scrollbars="vertical" />
 
 </FrameLayout>
