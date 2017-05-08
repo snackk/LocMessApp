@@ -15,15 +15,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
+import pt.cmov.locmess.locmess.firebaseConn.FirebaseRemoteConnection;
+import pt.cmov.locmess.locmess.firebaseConn.IUserDetailsResponseListener;
 import pt.cmov.locmess.locmess.fragments.locations.LocationsFragment;
 import pt.cmov.locmess.locmess.fragments.messages.MessagesFragment;
 import pt.cmov.locmess.locmess.fragments.profile.ProfileFragment;
@@ -31,18 +25,13 @@ import pt.cmov.locmess.locmess.fragments.profile.ProfileFragment;
 public class LocMessDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    //Firebase
-    private FirebaseAuth mAuth;
-    private DatabaseReference dRef;
-
     //Header drawer
     private TextView nameText;
     private TextView emailText;
 
     private NavigationView navigationView;
-
     private ProgressDialog progressDialog;
-
+    private FirebaseRemoteConnection _firebaseConnection;
     private enum fragType{
         Messages, Locations, Account
     }
@@ -61,7 +50,8 @@ public class LocMessDrawer extends AppCompatActivity
         initDrawer();
 
         //init firebase user
-        handleFireBaseUser();
+        _firebaseConnection = FirebaseRemoteConnection.getInstance();
+        updateUserDetails();
     }
 
     @Override
@@ -97,8 +87,10 @@ public class LocMessDrawer extends AppCompatActivity
         else if (id == R.id.nav_logout) {
             progressDialog.setMessage("Signing out...");
             progressDialog.show();
-            mAuth.signOut();
+
+            _firebaseConnection.doSignOut();
             finish();
+
             progressDialog.dismiss();
 
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
@@ -142,63 +134,19 @@ public class LocMessDrawer extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    private void handleFireBaseUser(){
+    private void updateUserDetails(){
         View hView =  navigationView.getHeaderView(0);
 
         nameText = (TextView) hView.findViewById(R.id.nameTextView);
         emailText = (TextView) hView.findViewById(R.id.emailTextView);
+        emailText.setText(_firebaseConnection.getFirebaseEmail());
 
-        mAuth = FirebaseAuth.getInstance();
-        dRef = FirebaseDatabase.getInstance().getReference();
-
-        if(mAuth.getCurrentUser() != null){
-            dRef = dRef.child("users");
-            emailText.setText(mAuth.getCurrentUser().getEmail());
-
-            Query queryRef = dRef.orderByChild("email").equalTo(mAuth.getCurrentUser().getEmail());
-            queryRef.addChildEventListener(new ChildEventListener() {
-                @Override
-                public void onChildAdded(DataSnapshot snapshot, String previousChild) {
-                    String groupKey = snapshot.getKey();
-
-                    dRef.child(groupKey + "/firstName").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot snapshot) {
-                            nameText.setText(snapshot.getValue().toString());
-                        }
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {}
-                    });
-                    dRef.child(groupKey + "/lastName").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot snapshot) {
-                            nameText.setText(nameText.getText() + " " + snapshot.getValue().toString());
-                        }
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {}
-                    });
-                }
-
-                @Override
-                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                }
-
-                @Override
-                public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                }
-
-                @Override
-                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
-        }
+        _firebaseConnection.getUserDetails();
+        _firebaseConnection.addOnUserDetailsResponseListener(new IUserDetailsResponseListener() {
+            @Override
+            public void OnUserDetailsResponseListener(String name) {
+                nameText.setText(name);
+            }
+        });
     }
 }

@@ -40,7 +40,7 @@ public class LocationCreateFragment extends Fragment implements
         super.onCreate(savedInstanceState);
         _updateLocation = FixedUpdateLocation.getInstance(getActivity());
 
-        _updateLocation.addLocationChangedListener(new ILocationChangedListener() {
+        _updateLocation.addOnLocationChangedListener(new ILocationChangedListener() {
             @Override
             public void onLocationChange(LatLng latLng) {
                 drawMap(latLng);

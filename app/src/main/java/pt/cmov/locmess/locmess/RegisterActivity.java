@@ -3,6 +3,7 @@ package pt.cmov.locmess.locmess;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -19,6 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import pt.cmov.locmess.locmess.firabaseUser.User;
+import pt.cmov.locmess.locmess.firebaseConn.FirebaseRemoteConnection;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -29,12 +31,9 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private EditText lastNameText;
 
     //Firebase
-    private FirebaseAuth.AuthStateListener mAuthListener;
-    private FirebaseAuth mAuth;
+    private FirebaseRemoteConnection _firebaseConnection;
 
     private ProgressDialog progressDialog;
-
-    private DatabaseReference dRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +52,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         firstNameText = (EditText) findViewById(R.id.firstNameText);
         lastNameText = (EditText) findViewById(R.id.lastNameText);
 
-        mAuth = FirebaseAuth.getInstance();
-        dRef = FirebaseDatabase.getInstance().getReference();
+        _firebaseConnection = FirebaseRemoteConnection.getInstance();
+        _firebaseConnection.dRef = FirebaseDatabase.getInstance().getReference();
     }
 
     @Override
@@ -76,34 +75,38 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         String lastName = lastNameText.getText().toString().trim();
 
         if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password) || TextUtils.isEmpty(firstName) || TextUtils.isEmpty(lastName)) {
-            Toast.makeText(this, "Fields cannot be empty.", Toast.LENGTH_SHORT).show();
+            View view = findViewById(R.id.activity_register);
+            Snackbar.make(view, "Fields cannot be empty!", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
             return;
         }
 
         progressDialog.setMessage("Registering user...");
         progressDialog.show();
 
-        mAuth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+        _firebaseConnection.getFAuth().createUserWithEmailAndPassword(email,password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 progressDialog.dismiss();
 
                 if(task.isSuccessful()) {
 
-                    dRef = dRef.child("users").push();
+                    _firebaseConnection.dRef = _firebaseConnection.dRef.child("users").push();
                     String email = emailText.getText().toString().trim();
                     String firstName = firstNameText.getText().toString().trim();
                     String lastName = lastNameText.getText().toString().trim();
                     User user = new User(firstName, lastName, email);
-                    dRef.setValue(user);
+                    _firebaseConnection.dRef.setValue(user);
 
                     finish();
                     Intent intent = new Intent(getApplicationContext(), LocMessDrawer.class);
                     startActivity(intent);
-                }else Toast.makeText(RegisterActivity.this, "Something went wrong.", Toast.LENGTH_SHORT).show();
+                }else {
+                    View view = findViewById(R.id.activity_login);
+                    Snackbar.make(view, "Something went wrong.", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
             }
         });
-
-
     }
 }

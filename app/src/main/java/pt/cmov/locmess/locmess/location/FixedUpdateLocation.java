@@ -36,7 +36,7 @@ public class FixedUpdateLocation implements
         _activity = activity;
     }
 
-    public static void addLocationChangedListener(ILocationChangedListener listner) {
+    public static void addOnLocationChangedListener(ILocationChangedListener listner) {
         listeners.add(listner);
     }
 
