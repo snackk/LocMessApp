@@ -35,7 +35,14 @@ dependencies {
     compile 'com.google.firebase:firebase-database:10.2.4'
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'com.google.android.gms:play-services:10.2.4'
-    compile 'com.squareup.retrofit2:retrofit:2.2.0'
+    compile ('com.squareup.retrofit2:retrofit:2.2.0') {
+        // exclude Retrofit’s OkHttp dependency module and define your own module import
+        exclude module: 'okhttp'
+    }
+    compile 'com.google.code.gson:gson:2.6.2'
+    compile 'com.squareup.retrofit2:converter-gson:2.2.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.7.0'
+    compile 'com.squareup.okhttp3:okhttp:3.7.0'
     testCompile 'junit:junit:4.12'
 }
 
