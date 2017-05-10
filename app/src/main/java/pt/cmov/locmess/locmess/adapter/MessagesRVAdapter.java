@@ -1,5 +1,6 @@
 package pt.cmov.locmess.locmess.adapter;
 
+import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import pt.cmov.locmess.locmess.R;
@@ -19,7 +19,8 @@ import pt.cmov.locmess.locmess.R;
 public class MessagesRVAdapter extends RecyclerView.Adapter<MessagesRVAdapter.MessagesAdapterViewHolder> {
     private List<MessageData> messageDatas = new ArrayList<MessageData>();
 
-    public MessagesRVAdapter(List<MessageData> myDataset) {
+    public MessagesRVAdapter(List<MessageData> myDataset)
+    {
         messageDatas = myDataset;
     }
 
@@ -42,6 +43,7 @@ public class MessagesRVAdapter extends RecyclerView.Adapter<MessagesRVAdapter.Me
         holder.message.setText(md.getMessage());
         holder.timeStamp.setText(md.getTimeStamp());
         holder.location.setText(md.getLocation());
+
     }
 
     @Override

@@ -49,6 +49,7 @@ public class MessagesFragment extends Fragment {
                         .setAction("Action", null).show();
                 Intent myIntent = new Intent(getContext(), MessageCreateActivity.class);
                 startActivity(myIntent);*/
+
                 Fragment fragment = new MessagesCreateFragment();
                 FragmentTransaction mainFragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                 mainFragmentTransaction.replace(R.id.app_content, fragment).commit();

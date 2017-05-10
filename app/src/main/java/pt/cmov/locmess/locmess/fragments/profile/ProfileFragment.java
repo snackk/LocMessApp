@@ -1,7 +1,5 @@
 package pt.cmov.locmess.locmess.fragments.profile;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -15,11 +13,9 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-import pt.cmov.locmess.locmess.ProfileCreateFragment;
 import pt.cmov.locmess.locmess.R;
 import pt.cmov.locmess.locmess.adapter.MessageData;
 import pt.cmov.locmess.locmess.adapter.MessagesRVAdapter;
-import pt.cmov.locmess.locmess.fragments.messages.MessagesCreateFragment;
 
 public class ProfileFragment extends Fragment {
 

@@ -47,7 +47,7 @@ public class LocationsFragment extends Fragment {
             public void onClick(View view) {
                 /*Snackbar.make(view, "Message sent!", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
-                Fragment fragment = new LocationCreateFragment();
+                Fragment fragment = new LocationCreateSelectionFragment();
                 FragmentTransaction mainFragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                 mainFragmentTransaction.replace(R.id.app_content, fragment).commit();
             }
