@@ -3,12 +3,23 @@ package pt.cmov.locmess.locmess.fragments.profile;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import pt.cmov.locmess.locmess.ProfileCreateFragment;
 import pt.cmov.locmess.locmess.R;
+import pt.cmov.locmess.locmess.adapter.MessageData;
+import pt.cmov.locmess.locmess.adapter.MessagesRVAdapter;
+import pt.cmov.locmess.locmess.fragments.messages.MessagesCreateFragment;
 
 public class ProfileFragment extends Fragment {
 
@@ -28,6 +39,35 @@ public class ProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         getActivity().setTitle("Profile");
 
+        List<MessageData> todelete = new ArrayList<MessageData>();
+        todelete.add(new MessageData("Diogo", "Vendo bike a 10 paus", "timestamp", "Arco do cego"));
+        todelete.add(new MessageData("Diogo", "Vendo bike a 10 paus", "timestamp", "Arco do cego"));
+        todelete.add(new MessageData("Diogo", "Vendo bike a 10 paus", "timestamp", "Arco do cego"));
+        todelete.add(new MessageData("Diogo", "Vendo bike a 10 paus", "timestamp", "Arco do cego"));
+        todelete.add(new MessageData("Diogo", "Vendo bike a 10 paus", "timestamp", "Arco do cego"));
+        todelete.add(new MessageData("Diogo", "Vendo bike a 10 paus", "timestamp", "Arco do cego"));
+        todelete.add(new MessageData("Diogo", "Vendo bike a 10 paus", "timestamp", "Arco do cego"));
+
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.profile_recycler_view);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(new MessagesRVAdapter(todelete));
+
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.new_profile_fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                /*Snackbar.make(view, "Message sent!", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                Intent myIntent = new Intent(getContext(), MessageCreateActivity.class);
+                startActivity(myIntent);*/
+                Fragment fragment = new ProfileCreateFragment();
+                FragmentTransaction mainFragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                mainFragmentTransaction.replace(R.id.app_content, fragment).commit();
+            }
+        });
         return view;
+
+
     }
 }
