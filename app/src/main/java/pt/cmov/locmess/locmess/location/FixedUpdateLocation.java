@@ -1,9 +1,12 @@
 package pt.cmov.locmess.locmess.location;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -77,14 +80,15 @@ public class FixedUpdateLocation implements
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-        try {
-            Location location = LocationServices.FusedLocationApi.getLastLocation(apiClient);
-            if (location == null)
-                LocationServices.FusedLocationApi.requestLocationUpdates(apiClient, mLocationRequest, this);
-            else locationHasChanged(location);
-        }catch(SecurityException e){
-
+        if (ActivityCompat.checkSelfPermission(_activity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(_activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            return;
         }
+        Location location = LocationServices.FusedLocationApi.getLastLocation(apiClient);
+        if (location == null)
+            LocationServices.FusedLocationApi.requestLocationUpdates(apiClient, mLocationRequest, this);
+        else locationHasChanged(location);
+
     }
 
     @Override
