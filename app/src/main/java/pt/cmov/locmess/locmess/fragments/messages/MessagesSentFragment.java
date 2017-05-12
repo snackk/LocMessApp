@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 import pt.cmov.locmess.locmess.R;
-import pt.cmov.locmess.locmess.adapter.MessageData;
-import pt.cmov.locmess.locmess.adapter.MessagesRVAdapter;
+import pt.cmov.locmess.locmess.adapter.messages.MessageData;
+import pt.cmov.locmess.locmess.adapter.messages.MessagesRVAdapter;
 import pt.cmov.locmess.locmess.firebaseConn.FirebaseRemoteConnection;
 import pt.cmov.locmess.locmess.restfulConn.ILocMessApi;
 import pt.cmov.locmess.locmess.restfulConn.LocMessApi;
@@ -36,7 +36,7 @@ public class MessagesSentFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         _firebaseConnection = FirebaseRemoteConnection.getInstance();
-        _messagesRVAdapter = new MessagesRVAdapter(this, _messagesList);
+        _messagesRVAdapter = new MessagesRVAdapter(_messagesList);
 
         _locMessApi = LocMessApi.getClient().create(ILocMessApi.class);
         Call<MessagesList> messagesListCall = _locMessApi.getListMessages(_firebaseConnection.getFirebaseEmail());
@@ -71,6 +71,7 @@ public class MessagesSentFragment extends Fragment {
 
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.messages_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        _messagesRVAdapter.passFrag(this);
         recyclerView.setAdapter(_messagesRVAdapter);
 
         return view;

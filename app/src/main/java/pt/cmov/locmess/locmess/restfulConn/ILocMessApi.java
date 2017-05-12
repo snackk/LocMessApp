@@ -32,7 +32,7 @@ public interface ILocMessApi {
 
     //Unread messages
     @GET("/locmess/messages/{username}/{location}")
-    Call<MessagesList> getListMessages(@Path("username") String username, @Path("location") String location);
+    Call<MessagesList> getUnreadListMessages(@Path("username") String username, @Path("location") String location);
 
     @GET("/locmess/locations/gps")
     Call<GpsLocationsList> getGpsLocations();

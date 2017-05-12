@@ -7,13 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import pt.cmov.locmess.locmess.R;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 public class MessagesReadFragment extends Fragment {
     private int message_pos;
 
@@ -43,7 +39,7 @@ public class MessagesReadFragment extends Fragment {
         getActivity().setTitle("Read Message");
 
         TextView t = (TextView) view.findViewById(R.id.title);
-        t.setText(message_pos);
+        t.setText(message_pos + "");
         return view;
     }
 

@@ -10,22 +10,16 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.List;
-
-import pt.cmov.locmess.locmess.adapter.MessageData;
 import pt.cmov.locmess.locmess.firabaseUser.User;
 import pt.cmov.locmess.locmess.firebaseConn.FirebaseRemoteConnection;
 import pt.cmov.locmess.locmess.restfulConn.ILocMessApi;
 import pt.cmov.locmess.locmess.restfulConn.LocMessApi;
-import pt.cmov.locmess.locmess.restfulConn.pojo.Location;
-import pt.cmov.locmess.locmess.restfulConn.pojo.MessagesList;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

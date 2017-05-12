@@ -45,22 +45,18 @@ public class LocationsFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Snackbar.make(view, "Message sent!", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
-                Fragment fragment = new LocationCreateSelectionFragment();
+                Fragment fragment = new LocationGpsCreateFragment();
                 FragmentTransaction mainFragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                 mainFragmentTransaction.replace(R.id.app_content, fragment).commit();
             }
         });
-
-
         return view;
     }
 
     private void setupViewPager() {
         FragmentPageAdapter adapter = new FragmentPageAdapter(getChildFragmentManager());
-        adapter.addFragment(new MyLocationsFragment(), "Mine");
-        adapter.addFragment(new AllLocationsFragment(), "All");
+        adapter.addFragment(new LocationsGpsFragment(), "Gps");
+        adapter.addFragment(new LocationsWifiFragment(), "Wi-fi");
         viewPager.setAdapter(adapter);
     }
 }
