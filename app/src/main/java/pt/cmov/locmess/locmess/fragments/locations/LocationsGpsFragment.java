@@ -1,9 +1,7 @@
 package pt.cmov.locmess.locmess.fragments.locations;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,16 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pt.cmov.locmess.locmess.R;
-import pt.cmov.locmess.locmess.adapter.locations.LocationData;
-import pt.cmov.locmess.locmess.adapter.locations.LocationsRVAdapter;
-import pt.cmov.locmess.locmess.adapter.messages.MessageData;
-import pt.cmov.locmess.locmess.adapter.messages.MessagesRVAdapter;
-import pt.cmov.locmess.locmess.firebaseConn.FirebaseRemoteConnection;
+import pt.cmov.locmess.locmess.adapter.locations.gps.LocationGpsData;
+import pt.cmov.locmess.locmess.adapter.locations.gps.LocationsGpsRVAdapter;
 import pt.cmov.locmess.locmess.restfulConn.ILocMessApi;
 import pt.cmov.locmess.locmess.restfulConn.LocMessApi;
 import pt.cmov.locmess.locmess.restfulConn.pojo.GpsLocationsList;
-import pt.cmov.locmess.locmess.restfulConn.pojo.Location;
-import pt.cmov.locmess.locmess.restfulConn.pojo.MessagesList;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -31,8 +24,8 @@ import retrofit2.Response;
 public class LocationsGpsFragment extends Fragment {
 
     private ILocMessApi _locMessApi;
-    private List<LocationData> _locationsList = new ArrayList<>();
-    private LocationsRVAdapter _locationsRVAdapter;
+    private List<LocationGpsData> _locationsList = new ArrayList<>();
+    private LocationsGpsRVAdapter _locationsRVAdapter;
 
     public LocationsGpsFragment() {
         // Required empty public constructor
@@ -42,7 +35,7 @@ public class LocationsGpsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        _locationsRVAdapter = new LocationsRVAdapter(_locationsList);
+        _locationsRVAdapter = new LocationsGpsRVAdapter(_locationsList);
 
         _locMessApi = LocMessApi.getClient().create(ILocMessApi.class);
 
@@ -56,7 +49,7 @@ public class LocationsGpsFragment extends Fragment {
                     List<GpsLocationsList.Datum> datumList = locationsList.rows;
 
                     for(GpsLocationsList.Datum d : datumList){
-                        _locationsList.add(new LocationData(d.name, d.latitude + "", d.longitude + "", d.radius));
+                        _locationsList.add(new LocationGpsData(d.name, d.latitude + "", d.longitude + "", d.radius));
                     }
                     _locationsRVAdapter.notifyDataSetChanged();
                 }
