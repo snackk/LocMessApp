@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import pt.cmov.locmess.locmess.R;
 
@@ -14,7 +15,7 @@ import pt.cmov.locmess.locmess.R;
  * A simple {@link Fragment} subclass.
  */
 public class MessagesReadFragment extends Fragment {
-
+    private int message_pos;
 
     public MessagesReadFragment() {
         // Required empty public constructor
@@ -23,8 +24,15 @@ public class MessagesReadFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+    }
 
-
+    @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            message_pos = bundle.getInt("message_pos");
+        }
     }
 
     @Override
@@ -32,10 +40,10 @@ public class MessagesReadFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_messages_read, container, false);
-        /*if (savedInstanceState != null) {
-            TextView t = (TextView) view.findViewById(R.id.ola);
-            t.setText(savedInstanceState.getInt("ola"));
-        }*/
+        getActivity().setTitle("Read Message");
+
+        TextView t = (TextView) view.findViewById(R.id.title);
+        t.setText(message_pos);
         return view;
     }
 

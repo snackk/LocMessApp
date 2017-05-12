@@ -35,7 +35,7 @@ public class ProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         getActivity().setTitle("Profile");
 
-        List<MessageData> todelete = new ArrayList<MessageData>();
+        /*List<MessageData> todelete = new ArrayList<MessageData>();
         todelete.add(new MessageData("Diogo", "Vendo bike a 10 paus", "timestamp", "Arco do cego"));
         todelete.add(new MessageData("Diogo", "Vendo bike a 10 paus", "timestamp", "Arco do cego"));
         todelete.add(new MessageData("Diogo", "Vendo bike a 10 paus", "timestamp", "Arco do cego"));
@@ -47,8 +47,8 @@ public class ProfileFragment extends Fragment {
         RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.profile_recycler_view);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(new MessagesRVAdapter(todelete));
-
+        recyclerView.setAdapter(new MessagesRVAdapter(this, todelete));
+*/
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.new_profile_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

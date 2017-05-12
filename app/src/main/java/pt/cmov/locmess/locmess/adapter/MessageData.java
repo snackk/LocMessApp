@@ -9,12 +9,14 @@ public class MessageData {
     private String _message;
     private String _timeStamp;
     private String _location;
+    private String _title;
 
-    public MessageData(String user, String message, String timeStamp, String location){
+    public MessageData(String user, String message, String timeStamp, String location, String title){
         _user = user;
         _message = message;
         _timeStamp = timeStamp;
         _location = location;
+        _title = title;
     }
 
     public String getUser(){

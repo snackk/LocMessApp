@@ -15,12 +15,20 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.List;
+
+import pt.cmov.locmess.locmess.adapter.MessageData;
 import pt.cmov.locmess.locmess.firabaseUser.User;
 import pt.cmov.locmess.locmess.firebaseConn.FirebaseRemoteConnection;
+import pt.cmov.locmess.locmess.restfulConn.ILocMessApi;
+import pt.cmov.locmess.locmess.restfulConn.LocMessApi;
+import pt.cmov.locmess.locmess.restfulConn.pojo.Location;
+import pt.cmov.locmess.locmess.restfulConn.pojo.MessagesList;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -29,6 +37,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private EditText passwordText;
     private EditText firstNameText;
     private EditText lastNameText;
+    private ILocMessApi locMessApi;
 
     //Firebase
     private FirebaseRemoteConnection _firebaseConnection;
@@ -54,6 +63,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
         _firebaseConnection = FirebaseRemoteConnection.getInstance();
         _firebaseConnection.dRef = FirebaseDatabase.getInstance().getReference();
+        locMessApi = LocMessApi.getClient().create(ILocMessApi.class);
     }
 
     @Override
@@ -84,12 +94,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         progressDialog.setMessage("Registering user...");
         progressDialog.show();
 
-        _firebaseConnection.getFAuth().createUserWithEmailAndPassword(email,password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+
+
+        _firebaseConnection.getFAuth().createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 progressDialog.dismiss();
 
-                if(task.isSuccessful()) {
+                if (task.isSuccessful()) {
 
                     _firebaseConnection.dRef = _firebaseConnection.dRef.child("users").push();
                     String email = emailText.getText().toString().trim();
@@ -98,10 +110,22 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     User user = new User(firstName, lastName, email);
                     _firebaseConnection.dRef.setValue(user);
 
+                    pt.cmov.locmess.locmess.restfulConn.pojo.User userR = new pt.cmov.locmess.locmess.restfulConn.pojo.User(email);
+                    Call<pt.cmov.locmess.locmess.restfulConn.pojo.User> call = locMessApi.createUser(userR);
+                    call.enqueue(new Callback<pt.cmov.locmess.locmess.restfulConn.pojo.User>() {
+                        @Override
+                        public void onResponse(Call<pt.cmov.locmess.locmess.restfulConn.pojo.User> call, Response<pt.cmov.locmess.locmess.restfulConn.pojo.User> response) {
+                        }
+
+                        @Override
+                        public void onFailure(Call<pt.cmov.locmess.locmess.restfulConn.pojo.User> call, Throwable t) {
+                            call.cancel();
+                        }
+                    });
                     finish();
                     Intent intent = new Intent(getApplicationContext(), LocMessDrawer.class);
                     startActivity(intent);
-                }else {
+                } else {
                     View view = findViewById(R.id.activity_login);
                     Snackbar.make(view, "Something went wrong.", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
