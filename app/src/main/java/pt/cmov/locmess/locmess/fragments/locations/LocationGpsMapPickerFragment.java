@@ -1,11 +1,16 @@
 package pt.cmov.locmess.locmess.fragments.locations;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -19,8 +24,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import pt.cmov.locmess.locmess.R;
-import pt.cmov.locmess.locmess.location.FixedUpdateLocation;
-import pt.cmov.locmess.locmess.location.ILocationChangedListener;
 
 public class LocationGpsMapPickerFragment extends Fragment implements
         OnMapReadyCallback,GoogleMap.OnMapClickListener {
@@ -28,33 +31,40 @@ public class LocationGpsMapPickerFragment extends Fragment implements
     private GoogleMap mMap;
     private Marker marker;
     private Circle radius;
-    private FixedUpdateLocation _updateLocation = null;
-    private boolean updated = false;
+    private BroadcastReceiver broadcastReceiver; //TESTING
     private int radius_circle;
+    private boolean isUpdate = false;
 
     public LocationGpsMapPickerFragment() {
         // Required empty public constructor
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if(broadcastReceiver == null){
+            broadcastReceiver = new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    if(!isUpdate){
+                        isUpdate = true;
+                        Bundle a = intent.getExtras().getBundle("coordinates");
+                        drawMap(new LatLng(a.getDouble("lat"),a.getDouble("long")));
+                    }
+                }
+            };
+        }
+        getActivity().registerReceiver(broadcastReceiver,new IntentFilter("location_update"));
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        _updateLocation = FixedUpdateLocation.getInstance(getActivity());
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             radius_circle = bundle.getInt("radius");
         }
-
-        _updateLocation.addOnLocationChangedListener(new ILocationChangedListener() {
-            @Override
-            public void onLocationChange(LatLng latLng) {
-                drawMap(latLng);
-                updated = true;
-                _updateLocation.setApiOff();
-            }
-        });
-        _updateLocation.doLocationRequest();
     }
 
     @Override
@@ -71,22 +81,16 @@ public class LocationGpsMapPickerFragment extends Fragment implements
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        if(!updated)
-            _updateLocation.setApiOn();
-    }
-
-    @Override
     public void onPause() {
         super.onPause();
-        _updateLocation.setApiOff();
+        if(broadcastReceiver != null){
+            getActivity().unregisterReceiver(broadcastReceiver);
+        }
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        _updateLocation.setApiOff();
     }
 
     @Override

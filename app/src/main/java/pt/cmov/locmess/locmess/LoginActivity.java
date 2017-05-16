@@ -15,7 +15,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 
-import pt.cmov.locmess.locmess.backgroundService.BackgroundIntentService;
 import pt.cmov.locmess.locmess.firebaseConn.FirebaseRemoteConnection;
 import pt.cmov.locmess.locmess.firebaseConn.IUserLogInListener;
 

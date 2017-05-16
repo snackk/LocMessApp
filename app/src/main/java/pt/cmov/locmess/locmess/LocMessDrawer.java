@@ -1,11 +1,7 @@
 package pt.cmov.locmess.locmess;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
@@ -21,10 +17,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import pt.cmov.locmess.locmess.backgroundService.BackgroundIntentService;
-import pt.cmov.locmess.locmess.backgroundService.GPS_Service;
+import pt.cmov.locmess.locmess.backgroundService.GpsBackgroundService;
 import pt.cmov.locmess.locmess.firebaseConn.FirebaseRemoteConnection;
 import pt.cmov.locmess.locmess.firebaseConn.IUserDetailsResponseListener;
 import pt.cmov.locmess.locmess.fragments.locations.LocationsFragment;
@@ -45,29 +39,14 @@ public class LocMessDrawer extends AppCompatActivity
         Messages, Locations, Account
     }
 
-    private BroadcastReceiver broadcastReceiver; //TESTING
-
     @Override
     protected void onResume() {
         super.onResume();
-        if(broadcastReceiver == null){
-            broadcastReceiver = new BroadcastReceiver() {
-                @Override
-                public void onReceive(Context context, Intent intent) {
-                    Bundle a = intent.getExtras().getBundle("coordinates");
-                    Toast.makeText(getApplicationContext(), a.getDouble("long") + "", Toast.LENGTH_LONG).show();
-                }
-            };
-        }
-        registerReceiver(broadcastReceiver,new IntentFilter("location_update"));
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(broadcastReceiver != null){
-            unregisterReceiver(broadcastReceiver);
-        }
     }
 
     @Override
@@ -80,7 +59,7 @@ public class LocMessDrawer extends AppCompatActivity
         }
 
         //Start background service
-        Intent intent = new Intent(getApplicationContext(), BackgroundIntentService.class);
+        Intent intent = new Intent(getApplicationContext(), GpsBackgroundService.class);
         startService(intent);
 
         progressDialog = new ProgressDialog(this);
