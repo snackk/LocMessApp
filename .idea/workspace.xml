@@ -5,6 +5,9 @@
       <config />
     </shared>
   </component>
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="d102cdb9-a60d-4a16-8ecd-84d67a3b16dd" name="Default" comment="" />
     <ignored path="LocMess.iws" />
@@ -37,20 +40,67 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="BackgroundIntentService.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="LocMessDrawer.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/pt/cmov/locmess/locmess/LocMessDrawer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="697">
+              <caret line="82" column="56" selection-start-line="82" selection-start-column="35" selection-end-line="82" selection-end-column="56" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BackgroundIntentService.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/pt/cmov/locmess/locmess/backgroundService/BackgroundIntentService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="657">
-              <caret line="40" column="20" selection-start-line="40" selection-start-column="20" selection-end-line="40" selection-end-column="20" />
+            <state relative-caret-position="1381">
+              <caret line="109" column="111" selection-start-line="109" selection-start-column="111" selection-end-line="109" selection-end-column="111" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#387#388#0" expanded="true" />
-                <element signature="e#448#449#0" expanded="true" />
-                <element signature="e#498#499#0" expanded="true" />
-                <element signature="e#525#526#0" expanded="true" />
-                <element signature="e#1011#1246#0" expanded="true" />
-                <element signature="e#1245#1246#0" expanded="true" />
+                <element signature="e#2950#3185#0" expanded="true" />
+                <element signature="e#3184#3185#0" expanded="true" />
+                <element signature="e#3250#3251#0" expanded="true" />
+                <element signature="e#3277#3278#0" expanded="true" />
+                <element signature="e#4460#4461#0" expanded="true" />
+                <element signature="e#4504#4505#0" expanded="true" />
+                <element signature="e#4640#4641#0" expanded="true" />
+                <element signature="e#4677#4678#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="FixedUpdateLocation.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/pt/cmov/locmess/locmess/location/FixedUpdateLocation.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="340">
+              <caret line="108" column="0" selection-start-line="108" selection-start-column="0" selection-end-line="113" selection-end-column="5" />
+              <folding>
+                <element signature="e#3315#3316#0" expanded="true" />
+                <element signature="e#3359#3360#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LocationGpsMapPickerFragment.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/pt/cmov/locmess/locmess/fragments/locations/LocationGpsMapPickerFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="130">
+              <caret line="30" column="55" selection-start-line="30" selection-start-column="55" selection-end-line="30" selection-end-column="55" />
+              <folding>
+                <element signature="e#1795#2041#0" expanded="true" />
+                <element signature="e#2040#2041#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LocationsFragment.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/pt/cmov/locmess/locmess/fragments/locations/LocationsFragment.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="496">
+              <caret line="49" column="67" selection-start-line="49" selection-start-column="67" selection-end-line="49" selection-end-column="67" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -2303,8 +2353,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/java/pt/cmov/locmess/locmess/restfulConn/pojo/MessagesList.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/pt/cmov/locmess/locmess/restfulConn/pojo/User.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/pt/cmov/locmess/locmess/restfulConn/LocMessApi.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/pt/cmov/locmess/locmess/restfulConn/pojo/Location.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_messages_read.xml" />
@@ -2345,15 +2393,17 @@
         <option value="$PROJECT_DIR$/app/src/main/java/pt/cmov/locmess/locmess/fragments/messages/MessagesCreateFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/pt/cmov/locmess/locmess/fragments/locations/LocationsGpsFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_gps_locations.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/pt/cmov/locmess/locmess/fragments/locations/LocationsFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/pt/cmov/locmess/locmess/restfulConn/pojo/WifiLocation.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/pt/cmov/locmess/locmess/restfulConn/ILocMessApi.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/pt/cmov/locmess/locmess/fragments/locations/LocationWifiCreateFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_location_wifi_create.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/pt/cmov/locmess/locmess/backgroundService/BackgroundIntentService.java" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/pt/cmov/locmess/locmess/LoginActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/pt/cmov/locmess/locmess/fragments/locations/LocationsFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/pt/cmov/locmess/locmess/location/FixedUpdateLocation.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/pt/cmov/locmess/locmess/backgroundService/GPS_Service.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/pt/cmov/locmess/locmess/LocMessDrawer.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/pt/cmov/locmess/locmess/backgroundService/BackgroundIntentService.java" />
       </list>
     </option>
   </component>
@@ -2504,6 +2554,28 @@
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="location" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="LocMessApp" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="locmess" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="fragments" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -2607,7 +2679,7 @@
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="UI_DESIGNER_EDITOR_MODE.NlPaletteManager-NlPreviewForm.SHOW" value="false" />
-    <property name="device.picker.selection" value="4TE7N16720002640" />
+    <property name="device.picker.selection" value="Nexus_5X_API_25_x86" />
     <property name="android.project.structure.last.selected" value="app" />
     <property name="android.project.structure.proportion" value="0.15" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -3006,14 +3078,14 @@
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32850778" sideWeight="0.5030257" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32962137" sideWeight="0.4978678" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32921588" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32935154" sideWeight="0.4969743" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32935154" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32962137" sideWeight="0.5021322" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23347548" sideWeight="0.4910913" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24962178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -3086,21 +3158,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/pt/cmov/locmess/locmess/firebaseConn/FirebaseRemoteConnection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-884">
-          <caret line="44" column="0" selection-start-line="44" selection-start-column="0" selection-end-line="47" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="748">
-          <caret line="44" column="46" selection-start-line="44" selection-start-column="46" selection-end-line="44" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/pt/cmov/locmess/locmess/restfulConn/pojo/User.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
@@ -3139,6 +3196,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="235">
           <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -3278,14 +3338,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/pt/cmov/locmess/locmess/fragments/messages/MessagesSentFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="901">
-          <caret line="73" column="40" selection-start-line="73" selection-start-column="40" selection-end-line="73" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/pt/cmov/locmess/locmess/fragments/messages/MessagesReceivedFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="79">
@@ -3333,8 +3385,8 @@
         <state relative-caret-position="425">
           <caret line="62" column="0" selection-start-line="62" selection-start-column="0" selection-end-line="68" selection-end-column="81" />
           <folding>
-            <element signature="e#1473#1474#0" expanded="true" />
-            <element signature="e#1517#1518#0" expanded="true" />
+            <element signature="e#1473#1474#0" expanded="false" />
+            <element signature="e#1517#1518#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -3434,14 +3486,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/pt/cmov/locmess/locmess/fragments/locations/LocationGpsMapPickerFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="105" column="18" selection-start-line="105" selection-start-column="18" selection-end-line="105" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/pt/cmov/locmess/locmess/fragments/locations/LocationGpsCreateFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="748">
@@ -3463,21 +3507,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/pt/cmov/locmess/locmess/fragments/locations/LocationsFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="496">
-          <caret line="49" column="66" selection-start-line="49" selection-start-column="40" selection-end-line="49" selection-end-column="66" />
-          <folding>
-            <element signature="e#1503#1902#0" expanded="true" />
-            <element signature="e#1901#1902#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/pt/cmov/locmess/locmess/LoginActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="323">
           <caret line="36" column="27" selection-start-line="36" selection-start-column="27" selection-end-line="36" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/pt/cmov/locmess/locmess/fragments/locations/LocationsFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="496">
+          <caret line="49" column="67" selection-start-line="49" selection-start-column="67" selection-end-line="49" selection-end-column="67" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/pt/cmov/locmess/locmess/fragments/messages/MessagesSentFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="901">
+          <caret line="73" column="40" selection-start-line="73" selection-start-column="40" selection-end-line="73" selection-end-column="40" />
           <folding />
         </state>
       </provider>
@@ -3487,34 +3536,63 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
+        <state relative-caret-position="358">
           <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/pt/cmov/locmess/locmess/LocMessDrawer.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/pt/cmov/locmess/locmess/location/FixedUpdateLocation.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="46" column="32" selection-start-line="46" selection-start-column="32" selection-end-line="46" selection-end-column="32" />
+        <state relative-caret-position="340">
+          <caret line="108" column="0" selection-start-line="108" selection-start-column="0" selection-end-line="113" selection-end-column="5" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#3315#3316#0" expanded="true" />
+            <element signature="e#3359#3360#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/pt/cmov/locmess/locmess/backgroundService/GPS_Service.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="259">
+          <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="37" selection-end-column="33" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/pt/cmov/locmess/locmess/backgroundService/BackgroundIntentService.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="657">
-          <caret line="40" column="20" selection-start-line="40" selection-start-column="20" selection-end-line="40" selection-end-column="20" />
+        <state relative-caret-position="1381">
+          <caret line="109" column="111" selection-start-line="109" selection-start-column="111" selection-end-line="109" selection-end-column="111" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#387#388#0" expanded="true" />
-            <element signature="e#448#449#0" expanded="true" />
-            <element signature="e#498#499#0" expanded="true" />
-            <element signature="e#525#526#0" expanded="true" />
-            <element signature="e#1011#1246#0" expanded="true" />
-            <element signature="e#1245#1246#0" expanded="true" />
+            <element signature="e#2950#3185#0" expanded="true" />
+            <element signature="e#3184#3185#0" expanded="true" />
+            <element signature="e#3250#3251#0" expanded="true" />
+            <element signature="e#3277#3278#0" expanded="true" />
+            <element signature="e#4460#4461#0" expanded="true" />
+            <element signature="e#4504#4505#0" expanded="true" />
+            <element signature="e#4640#4641#0" expanded="true" />
+            <element signature="e#4677#4678#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/pt/cmov/locmess/locmess/LocMessDrawer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="697">
+          <caret line="82" column="56" selection-start-line="82" selection-start-column="35" selection-end-line="82" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/pt/cmov/locmess/locmess/fragments/locations/LocationGpsMapPickerFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="30" column="55" selection-start-line="30" selection-start-column="55" selection-end-line="30" selection-end-column="55" />
+          <folding>
+            <element signature="e#1795#2041#0" expanded="true" />
+            <element signature="e#2040#2041#0" expanded="true" />
           </folding>
         </state>
       </provider>

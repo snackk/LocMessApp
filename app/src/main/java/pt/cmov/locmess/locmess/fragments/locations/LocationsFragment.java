@@ -47,7 +47,7 @@ public class LocationsFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment fragment = new LocationWifiCreateFragment();
+                Fragment fragment = new LocationGpsCreateFragment();
                 FragmentTransaction mainFragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                 mainFragmentTransaction.replace(R.id.app_content, fragment).commit();
             }

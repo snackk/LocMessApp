@@ -1,6 +1,7 @@
 package pt.cmov.locmess.locmess.location;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -33,24 +34,24 @@ public class FixedUpdateLocation implements
 
     private static List<ILocationChangedListener> listeners = new ArrayList<ILocationChangedListener>();
 
-    private FragmentActivity _activity = null;
+    private Context _activity = null;
 
-    protected FixedUpdateLocation(FragmentActivity activity){
+    protected FixedUpdateLocation(Context activity){
         _activity = activity;
     }
 
-    public static void addOnLocationChangedListener(ILocationChangedListener listner) {
-        listeners.add(listner);
+    public static void addOnLocationChangedListener(ILocationChangedListener listener) {
+        listeners.add(listener);
     }
 
-    public static FixedUpdateLocation getInstance(FragmentActivity activity){
+    public static FixedUpdateLocation getInstance(Context activity){
         if(instance == null)
             instance = new FixedUpdateLocation(activity);
         else instance.setActivity(activity);
         return instance;
     }
 
-    private void setActivity(FragmentActivity activity){
+    private void setActivity(Context activity){
         _activity = activity;
     }
 
@@ -81,14 +82,13 @@ public class FixedUpdateLocation implements
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         if (ActivityCompat.checkSelfPermission(_activity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(_activity, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
             return;
         }
+
         Location location = LocationServices.FusedLocationApi.getLastLocation(apiClient);
         if (location == null)
             LocationServices.FusedLocationApi.requestLocationUpdates(apiClient, mLocationRequest, this);
         else locationHasChanged(location);
-
     }
 
     @Override
