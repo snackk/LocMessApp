@@ -23,7 +23,7 @@
         app:layout_constraintLeft_toLeftOf="parent">
 
         <EditText
-            android:id="@+id/chat_text"
+            android:id="@+id/message_text"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1.0"

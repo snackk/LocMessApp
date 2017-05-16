@@ -4,10 +4,50 @@
     android:layout_height="match_parent"
     tools:context="pt.cmov.locmess.locmess.fragments.locations.LocationGpsCreateFragment">
 
-    <Button
-        android:id="@+id/pick_on_map"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Pick on map" />
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="368dp"
+        android:layout_height="495dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/location_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Location name" />
+
+        <EditText
+            android:id="@+id/location_latitude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="latitude" />
+
+        <EditText
+            android:id="@+id/location_longitude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="longitude" />
+
+        <EditText
+            android:id="@+id/location_radius"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:hint="radius - default is 100" />
+
+        <Button
+            android:id="@+id/pick_on_map"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Pick on map" />
+
+        <Button
+            android:id="@+id/post_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Post location" />
+
+
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

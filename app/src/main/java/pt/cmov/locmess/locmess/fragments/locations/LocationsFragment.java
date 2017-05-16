@@ -9,6 +9,8 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
 import pt.cmov.locmess.locmess.R;
 import pt.cmov.locmess.locmess.adapter.FragmentPageAdapter;
 
@@ -45,7 +47,7 @@ public class LocationsFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment fragment = new LocationGpsCreateFragment();
+                Fragment fragment = new LocationWifiCreateFragment();
                 FragmentTransaction mainFragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
                 mainFragmentTransaction.replace(R.id.app_content, fragment).commit();
             }

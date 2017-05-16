@@ -4,10 +4,30 @@
     android:layout_height="match_parent"
     tools:context="pt.cmov.locmess.locmess.fragments.locations.LocationWifiCreateFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <LinearLayout
+        android:layout_width="368dp"
+        android:layout_height="495dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/wifi_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Location name" />
+
+        <EditText
+            android:id="@+id/wifi_ssid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="SSID" />
+
+        <Button
+            android:id="@+id/post_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Post location" />
+
+
+    </LinearLayout>
 
 </FrameLayout>

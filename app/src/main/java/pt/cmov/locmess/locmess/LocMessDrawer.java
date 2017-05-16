@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import pt.cmov.locmess.locmess.backgroundService.BackgroundIntentService;
 import pt.cmov.locmess.locmess.firebaseConn.FirebaseRemoteConnection;
 import pt.cmov.locmess.locmess.firebaseConn.IUserDetailsResponseListener;
 import pt.cmov.locmess.locmess.fragments.locations.LocationsFragment;
@@ -40,6 +41,10 @@ public class LocMessDrawer extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loc_mess_drawer);
+
+        //Start background service
+        Intent intent = new Intent(this, BackgroundIntentService.class);
+        this.startService(intent);
 
         progressDialog = new ProgressDialog(this);
 

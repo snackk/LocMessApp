@@ -30,6 +30,7 @@ public class LocationGpsMapPickerFragment extends Fragment implements
     private Circle radius;
     private FixedUpdateLocation _updateLocation = null;
     private boolean updated = false;
+    private int radius_circle;
 
     public LocationGpsMapPickerFragment() {
         // Required empty public constructor
@@ -39,6 +40,11 @@ public class LocationGpsMapPickerFragment extends Fragment implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         _updateLocation = FixedUpdateLocation.getInstance(getActivity());
+
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            radius_circle = bundle.getInt("radius");
+        }
 
         _updateLocation.addOnLocationChangedListener(new ILocationChangedListener() {
             @Override
@@ -102,7 +108,7 @@ public class LocationGpsMapPickerFragment extends Fragment implements
         marker = mMap.addMarker(new MarkerOptions().position(latLng).title("Me").snippet("I'am here"));
         radius = mMap.addCircle(new CircleOptions()
                 .center(latLng)
-                .radius(100)
+                .radius(radius_circle)
                 .strokeColor(Color.argb(0, 63, 81, 181))
                 .fillColor(Color.argb(128, 63, 81, 181)));
 

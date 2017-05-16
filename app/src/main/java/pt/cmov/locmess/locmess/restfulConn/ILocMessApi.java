@@ -9,6 +9,7 @@ import pt.cmov.locmess.locmess.restfulConn.pojo.Location;
 import pt.cmov.locmess.locmess.restfulConn.pojo.Message;
 import pt.cmov.locmess.locmess.restfulConn.pojo.MessagesList;
 import pt.cmov.locmess.locmess.restfulConn.pojo.User;
+import pt.cmov.locmess.locmess.restfulConn.pojo.WifiLocation;
 import pt.cmov.locmess.locmess.restfulConn.pojo.WifiLocationsList;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -25,6 +26,9 @@ public interface ILocMessApi {
 
     @POST("/locmess/locations")
     Call<Location> createLocation(@Body Location location);
+
+    @POST("/locmess/locations")
+    Call<WifiLocation> createWifiLocation(@Body WifiLocation location);
 
     //Read messages
     @GET("/locmess/messages/{username}")
