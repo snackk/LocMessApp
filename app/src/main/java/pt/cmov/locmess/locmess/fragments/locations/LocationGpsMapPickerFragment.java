@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +27,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import pt.cmov.locmess.locmess.R;
 
 public class LocationGpsMapPickerFragment extends Fragment implements
-        OnMapReadyCallback,GoogleMap.OnMapClickListener {
+        OnMapReadyCallback,GoogleMap.OnMapClickListener, GoogleMap.OnMarkerClickListener {
 
     private GoogleMap mMap;
     private Marker marker;
@@ -34,6 +35,7 @@ public class LocationGpsMapPickerFragment extends Fragment implements
     private BroadcastReceiver broadcastReceiver; //TESTING
     private int radius_circle;
     private boolean isUpdate = false;
+    private LatLng _latLng;
 
     public LocationGpsMapPickerFragment() {
         // Required empty public constructor
@@ -49,7 +51,8 @@ public class LocationGpsMapPickerFragment extends Fragment implements
                     if(!isUpdate){
                         isUpdate = true;
                         Bundle a = intent.getExtras().getBundle("coordinates");
-                        drawMap(new LatLng(a.getDouble("lat"),a.getDouble("long")));
+                        _latLng = new LatLng(a.getDouble("lat"),a.getDouble("long"));
+                        drawMap(_latLng);
                     }
                 }
             };
@@ -96,11 +99,13 @@ public class LocationGpsMapPickerFragment extends Fragment implements
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        googleMap.setOnMarkerClickListener(this);
         mMap.setOnMapClickListener(this);
     }
 
     @Override
     public void onMapClick(LatLng latLng) {
+        _latLng = latLng;
         drawMap(latLng);
     }
 
@@ -109,6 +114,7 @@ public class LocationGpsMapPickerFragment extends Fragment implements
             marker.remove();
             radius.remove();
         }
+
         marker = mMap.addMarker(new MarkerOptions().position(latLng).title("Me").snippet("I'am here"));
         radius = mMap.addCircle(new CircleOptions()
                 .center(latLng)
@@ -119,5 +125,18 @@ public class LocationGpsMapPickerFragment extends Fragment implements
         CameraPosition cameraPosition = new CameraPosition.Builder().target(latLng).zoom(16.0f).build();
         CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
         mMap.moveCamera(cameraUpdate);
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        //getFragmentManager().popBackStack();
+        Bundle args = new Bundle();
+        args.putDouble("lat", _latLng.latitude);
+        args.putDouble("long", _latLng.longitude);
+        Fragment fragment = new LocationGpsCreateFragment();
+        fragment.setArguments(args);
+        FragmentTransaction mainFragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        mainFragmentTransaction.replace(R.id.app_content, fragment).commit();
+        return false;
     }
 }

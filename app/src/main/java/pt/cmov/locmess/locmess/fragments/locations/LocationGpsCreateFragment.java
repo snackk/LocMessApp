@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import okhttp3.ResponseBody;
 import pt.cmov.locmess.locmess.R;
 import pt.cmov.locmess.locmess.firebaseConn.FirebaseRemoteConnection;
 import pt.cmov.locmess.locmess.restfulConn.ILocMessApi;
@@ -26,6 +27,8 @@ public class LocationGpsCreateFragment extends Fragment {
     private EditText latitude;
     private EditText longitude;
     private EditText radius;
+    private double lat = 0;
+    private double longi = 0;
     private FirebaseRemoteConnection _firebaseConnection;
     private ILocMessApi _locMessApi;
 
@@ -38,6 +41,11 @@ public class LocationGpsCreateFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         _firebaseConnection = FirebaseRemoteConnection.getInstance();
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            lat = bundle.getDouble("lat");
+            longi = bundle.getDouble("long");
+        }
     }
 
     @Override
@@ -50,6 +58,11 @@ public class LocationGpsCreateFragment extends Fragment {
         latitude = (EditText) view.findViewById(R.id.location_latitude);
         longitude = (EditText) view.findViewById(R.id.location_longitude);
         radius = (EditText) view.findViewById(R.id.location_radius);
+
+        if(lat != 0 && longi != 0){
+            latitude.setText(lat + "");
+            longitude.setText(longi + "");
+        }
 
         Button picker = (Button) view.findViewById(R.id.pick_on_map);
         picker.setOnClickListener(new View.OnClickListener() {
@@ -69,21 +82,26 @@ public class LocationGpsCreateFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(!locationName.getText().toString().isEmpty() && !latitude.getText().toString().isEmpty() && !longitude.getText().toString().isEmpty()) {
-                    Location location = new Location(locationName.getText().toString().trim(), Integer.parseInt(latitude.getText().toString()), Integer.parseInt(longitude.getText().toString()), Integer.parseInt((radius.getText().toString()).isEmpty() ? "100" : (radius.getText().toString())));
+                    Location location = new Location(locationName.getText().toString().trim(), Double.parseDouble(latitude.getText().toString()), Double.parseDouble(longitude.getText().toString()), Integer.parseInt((radius.getText().toString()).isEmpty() ? "100" : (radius.getText().toString())));
 
                     _locMessApi = LocMessApi.getClient().create(ILocMessApi.class);
-                    Call<Location> call = _locMessApi.createLocation(location);
+                    Call<ResponseBody> call = _locMessApi.createLocation(location);
 
-                    call.enqueue(new Callback<Location>() {
+                    call.enqueue(new Callback<ResponseBody>() {
                         @Override
-                        public void onResponse(Call<Location> call, Response<Location> response) {
-                            if (response.code() == 200)
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            if (response.code() == 200) {
                                 Toast.makeText(getContext(), "Location posted!", Toast.LENGTH_LONG).show();
+                                locationName.setText("");
+                                latitude.setText("");
+                                longitude.setText("");
+                                radius.setText("");
+                            }
                             else Toast.makeText(getContext(), "Something went wrong, code: " + response.code(), Toast.LENGTH_LONG).show();
                         }
 
                         @Override
-                        public void onFailure(Call<Location> call, Throwable t) {
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
                             call.cancel();
                         }
                     });

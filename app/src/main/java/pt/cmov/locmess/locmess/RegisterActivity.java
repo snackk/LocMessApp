@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.database.FirebaseDatabase;
 
+import okhttp3.ResponseBody;
 import pt.cmov.locmess.locmess.firabaseUser.User;
 import pt.cmov.locmess.locmess.firebaseConn.FirebaseRemoteConnection;
 import pt.cmov.locmess.locmess.restfulConn.ILocMessApi;
@@ -105,14 +106,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     _firebaseConnection.dRef.setValue(user);
 
                     pt.cmov.locmess.locmess.restfulConn.pojo.User userR = new pt.cmov.locmess.locmess.restfulConn.pojo.User(email);
-                    Call<pt.cmov.locmess.locmess.restfulConn.pojo.User> call = locMessApi.createUser(userR);
-                    call.enqueue(new Callback<pt.cmov.locmess.locmess.restfulConn.pojo.User>() {
+                    Call<ResponseBody> call = locMessApi.createUser(userR);
+                    call.enqueue(new Callback<ResponseBody>() {
                         @Override
-                        public void onResponse(Call<pt.cmov.locmess.locmess.restfulConn.pojo.User> call, Response<pt.cmov.locmess.locmess.restfulConn.pojo.User> response) {
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                         }
 
                         @Override
-                        public void onFailure(Call<pt.cmov.locmess.locmess.restfulConn.pojo.User> call, Throwable t) {
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
                             call.cancel();
                         }
                     });

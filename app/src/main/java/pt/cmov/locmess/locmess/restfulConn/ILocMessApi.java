@@ -4,6 +4,7 @@ package pt.cmov.locmess.locmess.restfulConn;
  * Created by snackk on 10/05/2017.
  */
 
+import okhttp3.ResponseBody;
 import pt.cmov.locmess.locmess.restfulConn.pojo.GpsLocationsList;
 import pt.cmov.locmess.locmess.restfulConn.pojo.Location;
 import pt.cmov.locmess.locmess.restfulConn.pojo.Message;
@@ -19,16 +20,16 @@ import retrofit2.http.Path;
 
 public interface ILocMessApi {
     @POST("/locmess/users")
-    Call<User> createUser(@Body User user);
+    Call<ResponseBody> createUser(@Body User user);
 
     @POST("/locmess/messages")
-    Call<Message> createMessage(@Body Message message);
+    Call<ResponseBody> createMessage(@Body Message message);
 
     @POST("/locmess/locations")
-    Call<Location> createLocation(@Body Location location);
+    Call<ResponseBody> createLocation(@Body Location location);
 
     @POST("/locmess/locations")
-    Call<WifiLocation> createWifiLocation(@Body WifiLocation location);
+    Call<ResponseBody> createWifiLocation(@Body WifiLocation location);
 
     //Read messages
     @GET("/locmess/messages/{username}")

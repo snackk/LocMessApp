@@ -10,13 +10,13 @@ public class Location {
     @SerializedName("name")
     public String name;
     @SerializedName("latitude")
-    public int latitude;
+    public double latitude;
     @SerializedName("longitude")
-    public int longitude;
+    public double longitude;
     @SerializedName("radius")
     public int radius;
 
-    public Location(String name, int latitude, int longitude, int radius){
+    public Location(String name, double latitude, double longitude, int radius){
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;

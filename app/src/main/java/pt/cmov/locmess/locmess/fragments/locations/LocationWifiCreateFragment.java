@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import okhttp3.ResponseBody;
 import pt.cmov.locmess.locmess.R;
 import pt.cmov.locmess.locmess.restfulConn.ILocMessApi;
 import pt.cmov.locmess.locmess.restfulConn.LocMessApi;
@@ -46,18 +47,21 @@ public class LocationWifiCreateFragment extends Fragment {
                     WifiLocation location = new WifiLocation(wifiName.getText().toString().trim(), wifiSSID.getText().toString());
 
                     _locMessApi = LocMessApi.getClient().create(ILocMessApi.class);
-                    Call<WifiLocation> call = _locMessApi.createWifiLocation(location);
+                    Call<ResponseBody> call = _locMessApi.createWifiLocation(location);
 
-                    call.enqueue(new Callback<WifiLocation>() {
+                    call.enqueue(new Callback<ResponseBody>() {
                         @Override
-                        public void onResponse(Call<WifiLocation> call, Response<WifiLocation> response) {
-                            if (response.code() == 200)
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            if (response.code() == 200) {
                                 Toast.makeText(getContext(), "Location posted!", Toast.LENGTH_LONG).show();
+                                wifiName.setText("");
+                                wifiSSID.setText("");
+                            }
                             else Toast.makeText(getContext(), "Something went wrong, code: " + response.code(), Toast.LENGTH_LONG).show();
                         }
 
                         @Override
-                        public void onFailure(Call<WifiLocation> call, Throwable t) {
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
                             call.cancel();
                         }
                     });

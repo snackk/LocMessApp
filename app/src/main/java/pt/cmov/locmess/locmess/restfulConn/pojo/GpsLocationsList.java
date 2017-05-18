@@ -18,9 +18,9 @@ public class GpsLocationsList {
         @SerializedName("name")
         public String name;
         @SerializedName("latitude")
-        public int latitude;
+        public double latitude;
         @SerializedName("longitude")
-        public int longitude;
+        public double longitude;
         @SerializedName("radius")
         public int radius;
     }

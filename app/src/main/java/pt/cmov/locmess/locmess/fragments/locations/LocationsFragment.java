@@ -49,6 +49,7 @@ public class LocationsFragment extends Fragment {
             public void onClick(View view) {
                 Fragment fragment = new LocationGpsCreateFragment();
                 FragmentTransaction mainFragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                mainFragmentTransaction.addToBackStack(null);
                 mainFragmentTransaction.replace(R.id.app_content, fragment).commit();
             }
         });

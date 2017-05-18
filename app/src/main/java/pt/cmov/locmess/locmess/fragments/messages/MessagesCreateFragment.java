@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.ResponseBody;
 import pt.cmov.locmess.locmess.R;
 import pt.cmov.locmess.locmess.firebaseConn.FirebaseRemoteConnection;
 import pt.cmov.locmess.locmess.restfulConn.ILocMessApi;
@@ -98,20 +100,23 @@ public class MessagesCreateFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(!title_TextView.getText().toString().isEmpty() && !message_TextView.getText().toString().isEmpty()) {
-                    Message message = new Message(_firebaseConnection.getFirebaseEmail(), message_TextView.getText().toString().trim(), location_spinner.getSelectedItem().toString(), title_TextView.getText().toString().trim());
+                    final Message message = new Message(_firebaseConnection.getFirebaseEmail(), message_TextView.getText().toString().trim(), location_spinner.getSelectedItem().toString(), title_TextView.getText().toString().trim());
 
                     _locMessApi = LocMessApi.getClient().create(ILocMessApi.class);
-                    Call<Message> call = _locMessApi.createMessage(message);
-                    call.enqueue(new Callback<Message>() {
+                    Call<ResponseBody> call = _locMessApi.createMessage(message);
+                    call.enqueue(new Callback<ResponseBody>() {
                         @Override
-                        public void onResponse(Call<Message> call, Response<Message> response) {
-                            if (response.code() == 200)
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                            if (response.code() == 200) {
                                 Toast.makeText(getContext(), "Messaged posted!", Toast.LENGTH_LONG).show();
-                            else Toast.makeText(getContext(), "Something went wrong.", Toast.LENGTH_LONG).show();
+                                title_TextView.setText("");
+                                message_TextView.setText("");
+                            }
+                            else Toast.makeText(getContext(), "Something went wrong, code: " + response.code(), Toast.LENGTH_LONG).show();
                         }
 
                         @Override
-                        public void onFailure(Call<Message> call, Throwable t) {
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
                             call.cancel();
                         }
                     });
