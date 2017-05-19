@@ -86,8 +86,10 @@
         tools:layout_constraintTop_creator="1">
 
         <TextView
+            android:id="@+id/editText2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:inputType="textPersonName"
             android:text="Location" />
 
         <Spinner
@@ -95,6 +97,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true" />
+
+        <CheckBox
+            android:id="@+id/p2p"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="P2P" />
+        <EditText
+            android:id="@+id/target_ip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Target's IP adress"/>
     </LinearLayout>
 
     <LinearLayout
@@ -120,6 +133,8 @@
             android:ems="10"
             android:inputType="textMultiLine"
             android:hint="Type a title" />
+
+
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

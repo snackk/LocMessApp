@@ -10,6 +10,7 @@
 
     <string name="firstNameText">First Name</string>
     <string name="lastNameText">Last Name</string>
+    <string name="port">10001</string>
 
     <string name="title_activity_loc_mess_drawer">LocMess</string>
 

@@ -5,7 +5,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.1'
+        classpath 'com.android.tools.build:gradle:2.3.2'
         classpath 'com.google.gms:google-services:3.0.0'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -16,6 +16,12 @@ allprojects {
     repositories {
         jcenter()
     }
+}
+
+task publishDrivers (dependsOn: [':Termite-Cli-CDriver-AVD:publish',
+                                 ':Termite-Cli-CDriver-Genymotion:publish',
+                                 ':Termite-Cli-CDriver-CloudStack:publish']) {
+    description 'Copies the jars of connector drivers to the termite cli.'
 }
 
 task clean(type: Delete) {

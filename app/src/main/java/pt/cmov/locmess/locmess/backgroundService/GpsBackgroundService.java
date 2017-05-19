@@ -25,6 +25,19 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import pt.cmov.locmess.locmess.adapter.locations.gps.LocationGpsData;
+import pt.cmov.locmess.locmess.firebaseConn.FirebaseRemoteConnection;
+import pt.cmov.locmess.locmess.restfulConn.ILocMessApi;
+import pt.cmov.locmess.locmess.restfulConn.LocMessApi;
+import pt.cmov.locmess.locmess.restfulConn.pojo.GpsLocationsList;
+import pt.cmov.locmess.locmess.restfulConn.pojo.MessagesList;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 /**
  * Created by snackk on 16/05/2017.
  */
@@ -37,6 +50,8 @@ public class GpsBackgroundService extends Service implements GoogleApiClient.Con
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
     private boolean mInProgress;
+    private ILocMessApi _locMessApi;
+    private FirebaseRemoteConnection _firebaseConnection;
 
     @Override
     public void onCreate() {
@@ -52,6 +67,8 @@ public class GpsBackgroundService extends Service implements GoogleApiClient.Con
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
+
+        _firebaseConnection = FirebaseRemoteConnection.getInstance();
     }
 
     @Override
@@ -120,7 +137,60 @@ public class GpsBackgroundService extends Service implements GoogleApiClient.Con
         a.putDouble("long", location.getLongitude());
         a.putDouble("lat", location.getLatitude());
         i.putExtra("coordinates", a);
+        calculateCrap(location.getLongitude(), location.getLatitude());
         sendBroadcast(i);
         /*Calcular se estas coordenadas pertence a alguma das localizacoes*/
+    }
+
+    private void calculateCrap(final double longitude, final double latitude){
+        _locMessApi = LocMessApi.getClient().create(ILocMessApi.class);
+
+        Call<GpsLocationsList> locationsListCall = _locMessApi.getGpsLocations();
+        locationsListCall.enqueue(new Callback<GpsLocationsList>() {
+
+            @Override
+            public void onResponse(Call<GpsLocationsList> call, Response<GpsLocationsList> response) {
+                if(response.code() == 200){
+                    GpsLocationsList locationsList = response.body();
+                    List<GpsLocationsList.Datum> datumList = locationsList.rows;
+
+                    float[] result = new float[2];
+                    ArrayList<String> locations = new ArrayList<String>();
+
+                    for(GpsLocationsList.Datum d : datumList){
+                        android.location.Location.distanceBetween(d.latitude, d.longitude, latitude, longitude, result);
+                        if(result[0] < d.radius){
+                            showToast("You're inside of location: " + d.name);
+                            locations.add(d.name);
+                        }
+                    }
+
+                    for(String l : locations){
+                        _locMessApi = LocMessApi.getClient().create(ILocMessApi.class);
+
+                        Call<MessagesList> call1 = _locMessApi.getUnreadListMessages(_firebaseConnection.getFirebaseEmail(), l);
+
+                        call1.enqueue(new Callback<MessagesList>() {
+                            @Override
+                            public void onResponse(Call<MessagesList> call, Response<MessagesList> response) {
+                                if (response.code() == 200) {
+                                    showToast("New message! Check your messages.");
+                                } else showToast("Something went wrong, code: " + response.code());
+                            }
+
+                            @Override
+                            public void onFailure(Call<MessagesList> call, Throwable t) {
+                                call.cancel();
+                            }
+                        });
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<GpsLocationsList> call, Throwable t) {
+                call.cancel();
+            }
+        });
     }
 }

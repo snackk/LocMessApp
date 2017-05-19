@@ -1,12 +1,22 @@
 package pt.cmov.locmess.locmess;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.IBinder;
+import android.os.Messenger;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,15 +28,32 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.UnknownHostException;
+
 import pt.cmov.locmess.locmess.backgroundService.GpsBackgroundService;
+import pt.cmov.locmess.locmess.backgroundService.SharedWifiConnection;
+import pt.cmov.locmess.locmess.backgroundService.WifiBackgroundService;
 import pt.cmov.locmess.locmess.firebaseConn.FirebaseRemoteConnection;
 import pt.cmov.locmess.locmess.firebaseConn.IUserDetailsResponseListener;
 import pt.cmov.locmess.locmess.fragments.locations.LocationsFragment;
+import pt.cmov.locmess.locmess.fragments.messages.MessagesCreateFragment;
 import pt.cmov.locmess.locmess.fragments.messages.MessagesFragment;
 import pt.cmov.locmess.locmess.fragments.profile.ProfileFragment;
+import pt.inesc.termite.wifidirect.SimWifiP2pBroadcast;
+import pt.inesc.termite.wifidirect.SimWifiP2pDevice;
+import pt.inesc.termite.wifidirect.SimWifiP2pDeviceList;
+import pt.inesc.termite.wifidirect.SimWifiP2pInfo;
+import pt.inesc.termite.wifidirect.SimWifiP2pManager;
+import pt.inesc.termite.wifidirect.service.SimWifiP2pService;
+import pt.inesc.termite.wifidirect.sockets.SimWifiP2pSocket;
+import pt.inesc.termite.wifidirect.sockets.SimWifiP2pSocketManager;
+import pt.inesc.termite.wifidirect.sockets.SimWifiP2pSocketServer;
 
 public class LocMessDrawer extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener{
 
     //Header drawer
     private TextView nameText;
@@ -35,6 +62,8 @@ public class LocMessDrawer extends AppCompatActivity
     private NavigationView navigationView;
     private ProgressDialog progressDialog;
     private FirebaseRemoteConnection _firebaseConnection;
+
+
     private enum fragType{
         Messages, Locations, Account
     }
@@ -42,6 +71,11 @@ public class LocMessDrawer extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
     }
 
     @Override
@@ -59,8 +93,8 @@ public class LocMessDrawer extends AppCompatActivity
         }
 
         //Start background service
-        Intent intent = new Intent(getApplicationContext(), GpsBackgroundService.class);
-        startService(intent);
+        Intent intent1 = new Intent(getApplicationContext(), GpsBackgroundService.class);
+        startService(intent1);
 
         progressDialog = new ProgressDialog(this);
 
