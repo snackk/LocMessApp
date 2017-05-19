@@ -11,10 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import pt.cmov.locmess.locmess.R;
 import pt.cmov.locmess.locmess.adapter.FragmentPageAdapter;
+import pt.cmov.locmess.locmess.backgroundService.SharedWifiConnection;
 
 public class MessagesFragment extends Fragment {
     public static TabLayout tabLayout;
     public static ViewPager viewPager;
+    public SharedWifiConnection _sWifi;
 
     public MessagesFragment() {
     }
@@ -26,6 +28,8 @@ public class MessagesFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_messages, container, false);
 
         getActivity().setTitle("Messages");
+        _sWifi = SharedWifiConnection.getInstance();
+        _sWifi.setContext(getContext());
 
         viewPager = (ViewPager) view.findViewById(R.id.id_viewpager);
         if (viewPager != null) {

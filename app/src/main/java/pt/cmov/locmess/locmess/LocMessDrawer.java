@@ -12,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.Looper;
 import android.os.Messenger;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -52,6 +53,8 @@ import pt.inesc.termite.wifidirect.sockets.SimWifiP2pSocket;
 import pt.inesc.termite.wifidirect.sockets.SimWifiP2pSocketManager;
 import pt.inesc.termite.wifidirect.sockets.SimWifiP2pSocketServer;
 
+import static android.os.Looper.getMainLooper;
+
 public class LocMessDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -63,6 +66,10 @@ public class LocMessDrawer extends AppCompatActivity
     private ProgressDialog progressDialog;
     private FirebaseRemoteConnection _firebaseConnection;
 
+    private WifiBackgroundService mReceiver;
+    public static Context context;
+    public static SharedWifiConnection _sWifi;
+    public static Looper mainLoop;
 
     private enum fragType{
         Messages, Locations, Account
@@ -76,6 +83,7 @@ public class LocMessDrawer extends AppCompatActivity
     @Override
     public void onPause() {
         super.onPause();
+        unregisterReceiver(mReceiver);
     }
 
     @Override
@@ -91,6 +99,33 @@ public class LocMessDrawer extends AppCompatActivity
         if (ActivityCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         }
+
+        mainLoop = getMainLooper();
+        //WIFI - START
+        // initialize the WDSim API
+        SimWifiP2pSocketManager.Init(getApplicationContext());
+        _sWifi = SharedWifiConnection.getInstance();
+        _sWifi.setContext(getApplicationContext());
+
+        // register broadcast receiver
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(SimWifiP2pBroadcast.WIFI_P2P_STATE_CHANGED_ACTION);
+        filter.addAction(SimWifiP2pBroadcast.WIFI_P2P_PEERS_CHANGED_ACTION);
+        filter.addAction(SimWifiP2pBroadcast.WIFI_P2P_NETWORK_MEMBERSHIP_CHANGED_ACTION);
+        filter.addAction(SimWifiP2pBroadcast.WIFI_P2P_GROUP_OWNERSHIP_CHANGED_ACTION);
+        mReceiver = new WifiBackgroundService(this);
+        registerReceiver(mReceiver, filter);
+
+
+        //WIFI ON
+        Intent intent = new Intent(getApplicationContext(), SimWifiP2pService.class);
+        bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+
+        // spawn the chat server background task
+        new MessagesCreateFragment.IncommingCommTask().executeOnExecutor(
+                AsyncTask.THREAD_POOL_EXECUTOR);
+        //WIFI - END
+
 
         //Start background service
         Intent intent1 = new Intent(getApplicationContext(), GpsBackgroundService.class);
@@ -204,4 +239,24 @@ public class LocMessDrawer extends AppCompatActivity
             }
         });
     }
+
+
+    public static ServiceConnection mConnection = new ServiceConnection() {
+        // callbacks for service binding, passed to bindService()
+
+        @Override
+        public void onServiceConnected(ComponentName className, IBinder service) {
+            _sWifi.setMessageService(new Messenger(service));
+            _sWifi.setP2pManager(new SimWifiP2pManager(_sWifi.getMessageService()));
+            _sWifi.setP2pChannel(_sWifi.getP2pManager().initialize(context, mainLoop, null));
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            _sWifi.setMessageService(null);
+            _sWifi.setP2pManager(null);
+            _sWifi.setP2pChannel(null);
+        }
+    };
 }
+

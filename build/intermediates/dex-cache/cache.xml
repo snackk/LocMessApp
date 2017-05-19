@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="C:\Users\snackk\Documents\LocMessApp\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="e3bef9376da37d3e85748bc105dd10b35ff57a32">
+        <dex dex="C:\Users\snackk\Documents\LocMessApp\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_aa54df41480002b6ed197d93cd0a37357ef8912d\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\snackk\Documents\LocMessApp\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.2"
+        sha1="caff8e51a24901cfc9cd7e1cf83d84f4cb0c103b">
+        <dex dex="C:\Users\snackk\Documents\LocMessApp\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_94efb1fc041e80c280d1c1a65ca6d763c26565fc\classes.dex" />
+    </item>
+
+</items>

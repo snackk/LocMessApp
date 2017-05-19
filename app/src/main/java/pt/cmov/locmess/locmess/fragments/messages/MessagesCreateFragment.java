@@ -34,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.ResponseBody;
+import pt.cmov.locmess.locmess.LocMessDrawer;
 import pt.cmov.locmess.locmess.R;
 import pt.cmov.locmess.locmess.backgroundService.SharedWifiConnection;
 import pt.cmov.locmess.locmess.backgroundService.WifiBackgroundService;
@@ -72,19 +73,13 @@ public class MessagesCreateFragment extends Fragment implements PeerListListener
     private Spinner policy_spinner;
     private TextView title_TextView;
     private TextView message_TextView;
-    private TextView targetIp;
 
     private ArrayAdapter<String> locationsAd;
     private ArrayList<String> virtIp = new ArrayList<>();
-    private SharedWifiConnection _sWifi;
-
-    private Messenger mService = null;
-    private SimWifiP2pManager mManager = null;
-    private SimWifiP2pManager.Channel mChannel = null;
+    private static SharedWifiConnection _sWifi;
 
     //WIFI
-    private WifiBackgroundService mReceiver;
-    private SimWifiP2pSocketServer mSrvSocket = null;
+    private static SimWifiP2pSocketServer mSrvSocket = null;
     private SimWifiP2pSocket mCliSocket = null;
     private CheckBox p2p;
 
@@ -96,30 +91,10 @@ public class MessagesCreateFragment extends Fragment implements PeerListListener
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         _firebaseConnection = FirebaseRemoteConnection.getInstance();
-        //_sWifi = SharedWifiConnection.getInstance();
-        //WIFI - START
-        // initialize the WDSim API
-        SimWifiP2pSocketManager.Init(getContext());
 
-        // register broadcast receiver
-        IntentFilter filter = new IntentFilter();
-        filter.addAction(SimWifiP2pBroadcast.WIFI_P2P_STATE_CHANGED_ACTION);
-        filter.addAction(SimWifiP2pBroadcast.WIFI_P2P_PEERS_CHANGED_ACTION);
-        filter.addAction(SimWifiP2pBroadcast.WIFI_P2P_NETWORK_MEMBERSHIP_CHANGED_ACTION);
-        filter.addAction(SimWifiP2pBroadcast.WIFI_P2P_GROUP_OWNERSHIP_CHANGED_ACTION);
-        mReceiver = new WifiBackgroundService(getActivity().getApplicationContext());
-        getActivity().registerReceiver(mReceiver, filter);
+        _sWifi = SharedWifiConnection.getInstance();
 
 
-        //WIFI ON
-
-        Intent intent = new Intent(getActivity(), SimWifiP2pService.class);
-        getActivity().bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
-
-        // spawn the chat server background task
-        new MessagesCreateFragment.IncommingCommTask().executeOnExecutor(
-                AsyncTask.THREAD_POOL_EXECUTOR);
-        //WIFI - END
     }
 
     @Override
@@ -128,8 +103,9 @@ public class MessagesCreateFragment extends Fragment implements PeerListListener
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_messages_create, container, false);
         getActivity().setTitle("New Message");
-
         _locMessApi = LocMessApi.getClient().create(ILocMessApi.class);
+
+        //_sWifi.setContext(getContext());
 
         locationsAd = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, _locationsList);
         location_spinner = (Spinner) view.findViewById(R.id.spinner_locations);
@@ -166,7 +142,6 @@ public class MessagesCreateFragment extends Fragment implements PeerListListener
 
         title_TextView = (TextView) view.findViewById(R.id.message_title);
         message_TextView = (TextView) view.findViewById(R.id.message_text);
-        targetIp = (TextView) view.findViewById(R.id.target_ip);
 
         p2p = (CheckBox) view.findViewById(R.id.p2p);
 
@@ -175,8 +150,8 @@ public class MessagesCreateFragment extends Fragment implements PeerListListener
             @Override
             public void onClick(View v) {
                 if(p2p.isChecked()){
-                    mManager.requestPeers(mChannel, MessagesCreateFragment.this);
-                    mManager.requestGroupInfo(mChannel, MessagesCreateFragment.this);
+                    _sWifi.getP2pManager().requestPeers(_sWifi.getChannel(), MessagesCreateFragment.this);
+                    _sWifi.getP2pManager().requestGroupInfo(_sWifi.getChannel(), MessagesCreateFragment.this);
 
                     if (!message_TextView.getText().toString().isEmpty()) {
                         for(String ip : virtIp){
@@ -224,26 +199,17 @@ public class MessagesCreateFragment extends Fragment implements PeerListListener
 
         return view;
     }
-    @Override
-    public void onPause() {
-        super.onPause();
-        getActivity().unregisterReceiver(mReceiver);
-    }
-
-
 
 
     //_______________________________________________________________________________
     //                      w I F i
     //_______________________________________________________________________________
 
-
-
 	/*
 	 * Asynctasks implementing message exchange
 	 */
 
-    public class IncommingCommTask extends AsyncTask<Void, String, Void> {
+    public static class IncommingCommTask extends AsyncTask<Void, String, Void> {
 
         @Override
         protected Void doInBackground(Void... params) {
@@ -280,7 +246,8 @@ public class MessagesCreateFragment extends Fragment implements PeerListListener
 
         @Override
         protected void onProgressUpdate(String... values) {
-            targetIp.append(values[0] + "\n");
+            //targetIp.append(values[0] + "\n");
+            Toast.makeText(_sWifi.getContext(), values[0], Toast.LENGTH_LONG).show();
         }
     }
 
@@ -288,7 +255,6 @@ public class MessagesCreateFragment extends Fragment implements PeerListListener
 
         @Override
         protected void onPreExecute() {
-            //mTextOutput.setText("Connecting...");
         }
 
         @Override
@@ -306,7 +272,7 @@ public class MessagesCreateFragment extends Fragment implements PeerListListener
 
         @Override
         protected void onPostExecute(String result) {
-
+            //Toast.makeText(_sWifi.getContext(), result + " ", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -329,7 +295,6 @@ public class MessagesCreateFragment extends Fragment implements PeerListListener
 
         @Override
         protected void onPostExecute(Void result) {
-
         }
     }
 
@@ -354,8 +319,7 @@ public class MessagesCreateFragment extends Fragment implements PeerListListener
                 .setNeutralButton("Dismiss", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                     }
-                })
-                .show();
+                }).show();
     }
 
     @Override
@@ -379,29 +343,11 @@ public class MessagesCreateFragment extends Fragment implements PeerListListener
                 .setNeutralButton("Dismiss", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                     }
-                })
-                .show();
+                }).show();
     }
 
     //_______________________________________________________________________________
     //                      w I F i
     //_______________________________________________________________________________
 
-    private ServiceConnection mConnection = new ServiceConnection() {
-        // callbacks for service binding, passed to bindService()
-
-        @Override
-        public void onServiceConnected(ComponentName className, IBinder service) {
-            mService = new Messenger(service);
-            mManager = new SimWifiP2pManager(mService);
-            mChannel = mManager.initialize(getActivity(), getMainLooper(), null);
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName arg0) {
-            mService = null;
-            mManager = null;
-            mChannel = null;
-        }
-    };
 }

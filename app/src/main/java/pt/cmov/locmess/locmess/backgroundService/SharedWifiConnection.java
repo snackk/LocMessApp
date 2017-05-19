@@ -1,5 +1,6 @@
 package pt.cmov.locmess.locmess.backgroundService;
 
+import android.content.Context;
 import android.os.Messenger;
 
 import pt.inesc.termite.wifidirect.SimWifiP2pManager;
@@ -15,6 +16,7 @@ public class SharedWifiConnection {
     private Messenger mService = null;
     private SimWifiP2pManager mManager = null;
     private SimWifiP2pManager.Channel mChannel = null;
+    private Context context;
 
     protected SharedWifiConnection(){
 
@@ -49,5 +51,13 @@ public class SharedWifiConnection {
 
     public void setP2pChannel(SimWifiP2pManager.Channel channel){
         mChannel = channel;
+    }
+
+    public Context getContext(){
+        return context;
+    }
+
+    public void setContext(Context context){
+        this.context = context;
     }
 }
