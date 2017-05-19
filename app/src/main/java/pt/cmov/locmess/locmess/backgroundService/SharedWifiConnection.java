@@ -1,10 +1,19 @@
 package pt.cmov.locmess.locmess.backgroundService;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Messenger;
+import android.util.Log;
+import android.widget.Toast;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 import pt.inesc.termite.wifidirect.SimWifiP2pManager;
+import pt.inesc.termite.wifidirect.sockets.SimWifiP2pSocket;
 import pt.inesc.termite.wifidirect.sockets.SimWifiP2pSocketManager;
+import pt.inesc.termite.wifidirect.sockets.SimWifiP2pSocketServer;
 
 /**
  * Created by snackk on 19/05/2017.
@@ -17,6 +26,7 @@ public class SharedWifiConnection {
     private SimWifiP2pManager mManager = null;
     private SimWifiP2pManager.Channel mChannel = null;
     private Context context;
+    private SimWifiP2pSocketServer mSrvSocket = null;
 
     protected SharedWifiConnection(){
 
@@ -59,5 +69,13 @@ public class SharedWifiConnection {
 
     public void setContext(Context context){
         this.context = context;
+    }
+
+    public SimWifiP2pSocketServer getmSrvSocket(){
+        return mSrvSocket;
+    }
+
+    public void setmSrvSocket(SimWifiP2pSocketServer socket){
+        mSrvSocket = socket;
     }
 }

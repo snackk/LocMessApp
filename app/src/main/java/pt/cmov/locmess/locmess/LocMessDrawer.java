@@ -28,8 +28,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.UnknownHostException;
@@ -43,6 +48,7 @@ import pt.cmov.locmess.locmess.fragments.locations.LocationsFragment;
 import pt.cmov.locmess.locmess.fragments.messages.MessagesCreateFragment;
 import pt.cmov.locmess.locmess.fragments.messages.MessagesFragment;
 import pt.cmov.locmess.locmess.fragments.profile.ProfileFragment;
+import pt.cmov.locmess.locmess.restfulConn.pojo.Message;
 import pt.inesc.termite.wifidirect.SimWifiP2pBroadcast;
 import pt.inesc.termite.wifidirect.SimWifiP2pDevice;
 import pt.inesc.termite.wifidirect.SimWifiP2pDeviceList;
@@ -101,13 +107,10 @@ public class LocMessDrawer extends AppCompatActivity
         }
 
         mainLoop = getMainLooper();
-        //WIFI - START
-        // initialize the WDSim API
         SimWifiP2pSocketManager.Init(getApplicationContext());
         _sWifi = SharedWifiConnection.getInstance();
-        _sWifi.setContext(getApplicationContext());
+        _sWifi.setContext(this);
 
-        // register broadcast receiver
         IntentFilter filter = new IntentFilter();
         filter.addAction(SimWifiP2pBroadcast.WIFI_P2P_STATE_CHANGED_ACTION);
         filter.addAction(SimWifiP2pBroadcast.WIFI_P2P_PEERS_CHANGED_ACTION);
@@ -116,18 +119,12 @@ public class LocMessDrawer extends AppCompatActivity
         mReceiver = new WifiBackgroundService(this);
         registerReceiver(mReceiver, filter);
 
-
-        //WIFI ON
         Intent intent = new Intent(getApplicationContext(), SimWifiP2pService.class);
         bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
 
-        // spawn the chat server background task
-        new MessagesCreateFragment.IncommingCommTask().executeOnExecutor(
+        new IncommingCommTask().executeOnExecutor(
                 AsyncTask.THREAD_POOL_EXECUTOR);
-        //WIFI - END
 
-
-        //Start background service
         Intent intent1 = new Intent(getApplicationContext(), GpsBackgroundService.class);
         startService(intent1);
 
@@ -241,11 +238,11 @@ public class LocMessDrawer extends AppCompatActivity
     }
 
 
-    public static ServiceConnection mConnection = new ServiceConnection() {
-        // callbacks for service binding, passed to bindService()
+    public ServiceConnection mConnection = new ServiceConnection() {
 
         @Override
         public void onServiceConnected(ComponentName className, IBinder service) {
+            _sWifi = SharedWifiConnection.getInstance();
             _sWifi.setMessageService(new Messenger(service));
             _sWifi.setP2pManager(new SimWifiP2pManager(_sWifi.getMessageService()));
             _sWifi.setP2pChannel(_sWifi.getP2pManager().initialize(context, mainLoop, null));
@@ -253,10 +250,63 @@ public class LocMessDrawer extends AppCompatActivity
 
         @Override
         public void onServiceDisconnected(ComponentName arg0) {
+            _sWifi = SharedWifiConnection.getInstance();
             _sWifi.setMessageService(null);
             _sWifi.setP2pManager(null);
             _sWifi.setP2pChannel(null);
         }
     };
+
+    public class IncommingCommTask extends AsyncTask<Void, String, Void> {
+
+        @Override
+        protected Void doInBackground(Void... params) {
+
+            try {
+                _sWifi.setmSrvSocket(new SimWifiP2pSocketServer(10001));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            while (!Thread.currentThread().isInterrupted()) {
+                try {
+                    SimWifiP2pSocket sock = _sWifi.getmSrvSocket().accept();
+                    try {
+                        BufferedReader sockIn = new BufferedReader(
+                                new InputStreamReader(sock.getInputStream()));
+                        String st = sockIn.readLine();
+                        publishProgress(st);
+                        sock.getOutputStream().write(("\n").getBytes());
+                    } catch (IOException e) {
+                        Log.d("Error reading socket:", e.getMessage());
+                    } finally {
+                        sock.close();
+                    }
+                } catch (IOException e) {
+                    Log.d("Error socket:", e.getMessage());
+                    break;
+                    //e.printStackTrace();
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            //Toast.makeText(_sWifi.getContext(), values[0], Toast.LENGTH_LONG).show();
+            // 1. JSON to Java object, read it from a file.
+            Gson gson = new GsonBuilder().create();
+            Message message = gson.fromJson(values[0], Message.class);
+
+            new AlertDialog.Builder(_sWifi.getContext())
+                    .setTitle("New p2p Message")
+                    .setMessage("Title: " + message.title + "\n" +
+                            "Message: " + message.message + "\n" +
+                            "Creator: "+ message.username )
+                    .setNeutralButton("Dismiss", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    }).show();
+        }
+    }
 }
 

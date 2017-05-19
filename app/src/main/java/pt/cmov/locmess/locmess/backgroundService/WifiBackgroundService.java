@@ -16,6 +16,7 @@ public class WifiBackgroundService extends BroadcastReceiver {
     private Context mActivity;
 
     public WifiBackgroundService(Context cont){
+        super();
         mActivity = cont;
     }
 

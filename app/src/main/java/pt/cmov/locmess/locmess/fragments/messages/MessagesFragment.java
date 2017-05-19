@@ -29,7 +29,6 @@ public class MessagesFragment extends Fragment {
 
         getActivity().setTitle("Messages");
         _sWifi = SharedWifiConnection.getInstance();
-        _sWifi.setContext(getContext());
 
         viewPager = (ViewPager) view.findViewById(R.id.id_viewpager);
         if (viewPager != null) {
